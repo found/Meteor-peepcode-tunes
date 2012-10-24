@@ -5,24 +5,48 @@
 <body>
   {{> playlist}}
   {{> library}}
+  {{> test}}
 </body>
 
+<template name="test">
+  <h1>atoehut</h1>
+  <button id="testing">TEST</button>
+</template>
 
 <template name="playlist">
   <div class="playlist">
     <h1>Playlist</h1>
     <nav>
-      <button class="control play" ng-click="player.play()" ng-hide="player.playing">Play</button>
-      <button class="control pause" ng-click="player.pause()" ng-show="player.playing">Pause</button>
-      <button class="control prev" ng-click="player.previous()">Prev</button>
-      <button class="control next" ng-click="player.next()">Next</button>
+      {{#if playing}}
+        <button class="control pause">Pause</button>
+      {{else}}
+        <button class="control play">Play</button>
+      {{/if}}
+      <button class="control prev">Prev</button>
+      <button class="control next">Next</button>
     </nav>
     <ul class="albums">
-      {{#each albums}}
-        {{> album}}
+      {{#each albumsInPlaylist}}
+        {{> albumPl}}
       {{/each}}
     </ul>
   </div>
+</template>
+
+<template name="albumPl">
+  <li class="album {{isCurrent title}}">
+    <button class="queue remove"></button>
+    <span class="album-title">{{title}}</span>
+    <span class="artist-name">{{artist}}</span>
+    <ol class="tracks">
+      {{#each tracks}}
+        {{> track}}
+      {{/each}}
+  </li>
+</template>
+
+<template name="track">
+  <li class="track {{isCurrent title}}">{{title}}</li>
 </template>
 
 <template name="library">
